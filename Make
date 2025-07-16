@@ -1,0 +1,15 @@
+# Makefile for running and watching tests
+
+# Define the Clojure command
+CLOJURE_CLI = clj
+
+# Command to run tests
+test:
+	$(CLOJURE_CLI) -M:test:kaocha
+
+# Command to watch tests
+watch:
+	$(CLOJURE_CLI) -M:test:kaocha --watch
+
+# Phony targets
+.PHONY: test watch

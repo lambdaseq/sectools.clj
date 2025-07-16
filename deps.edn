@@ -1,2 +1,8 @@
 {:paths ["src"]
- :deps {}}
+ :deps  {}
+ :aliases
+ {:dev          {:extra-deps {hashp/hashp {:mvn/version "0.2.2"}}}
+  :test         {:extra-paths ["test"]
+                 :extra-deps  {lambdaisland/kaocha {:mvn/version "1.87.1366"}}
+                 :main-opts ["-e" "(require,'hashp.core)"
+                             "-m" "kaocha.runner"]}}}
