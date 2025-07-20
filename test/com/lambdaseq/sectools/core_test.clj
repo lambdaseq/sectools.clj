@@ -3,6 +3,27 @@
             [com.lambdaseq.sectools.core :as sut])
   (:import [java.net ServerSocket]))
 
+(def open-port 7888)                ;; ο “γνωστός ανοιχτός” port
+(def closed-port 7889)              ;; υποθέτουμε ότι είναι ελεύθερος
+
+(deftest scan-known-localhost-ports
+  ;; Εκκινούμε έναν προσωρινό server στο port 7888
+  (with-open [srv (ServerSocket. open-port)]
+    ;; 1 . Σαρώνουμε ΜΟΝΟ το 7888 ⇒ πρέπει να είναι :open
+    (is (= {:open   [open-port]
+            :closed []}
+           (sut/scan-ports "localhost" open-port open-port)))
+
+    ;; 2 . Σαρώνουμε και 7888 + 7889
+    (let [{:keys [open closed]}
+          (sut/scan-ports "127.0.0.1" open-port closed-port 300)]
+      (testing "ο ανοιχτός port ανιχνεύεται σωστά"
+        (is (some #{open-port} open)))
+      (testing "ο κλειστός port ανιχνεύεται σωστά"
+        (is (some #{closed-port} closed))))))
+
+
+
 (defn ^:private free-listening-port
   "Start a temporary ServerSocket listening on an OS-assigned port and
    return a vector [socket port-number].  Caller must close the socket."
