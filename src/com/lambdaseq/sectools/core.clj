@@ -55,3 +55,4 @@
       {:open [] :closed []}
       ; The sequence of ports to scan
       ports))))
+
