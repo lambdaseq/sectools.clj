@@ -1,8 +1,8 @@
-(ns com.lambdaseq.sectools.core)
+(ns com.lambdaseq.sectools.core
+  (:import [java.net Socket InetSocketAddress]))
 
 ; ALL PHASES HERE 
 
-(import '[java.net Socket InetSocketAddress])
 ;Java networking classes so we can construct sockets and connect to destination addresses
 
 ; Purpose:
